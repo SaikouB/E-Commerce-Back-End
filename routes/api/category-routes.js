@@ -26,8 +26,9 @@ router.get('/:id', async (req, res) => {
 
     if (!category) {
       res.status(404).json({ message: 'Could not find category' });
-    };
-    res.status(200).json(category);
+    } else {
+      res.status(200).json(category);
+    }
   } catch (error) {
     res.status(500).json(error);
   };
@@ -51,7 +52,11 @@ router.put('/:id', async (req, res) => {
     if (!category) {
       res.status(404).json({ message: 'category not found' });
     }
-    await Category.update(req.body);
+    await Category.update(req.body, {
+      where: {
+        id: categoryId
+      }
+    });
     res.status(200).json(category);
   } catch (error) {
     res.status(500).json(error)

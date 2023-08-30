@@ -26,8 +26,9 @@ router.get('/:id', async (req, res) => {
 
     if (!tag) {
       res.status(404).json({ message: 'could not find tag' });
-    };
-    res.status(200).json(tag);
+    } else {
+      res.status(200).json(tag);
+    }
   } catch (error) {
     res.status(500).json(error);
   }
@@ -50,7 +51,11 @@ router.put('/:id', async (req, res) => {
     if (!tag) {
       res.status(404).json({ message: 'could not find tag' });
     }
-    await Tag.update(req.body);
+    await Tag.update(req.body,{
+      where: {
+        id: req.params.id
+      }
+    });
     res.status(200).json(tag);
   } catch (error) {
     res.status(400).json(error)

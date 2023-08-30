@@ -27,9 +27,10 @@ router.get('/:id', async (req, res) => {
     });
 
     if (!productData) {
-      req.status(404).json({ message: 'Sorry, Can not find product' });
+      res.status(404).json({ message: 'Sorry, Can not find product' });
+    } else {
+      res.status(200).json(productData);
     }
-    res.status(200).json(productData);
   } catch (error) {
     res.status(500).json(error);
   }
